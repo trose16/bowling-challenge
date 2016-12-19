@@ -1,5 +1,4 @@
 
-
 function BowlingGame() {
   this.frames = 10;
   this.playing = true;
@@ -9,4 +8,8 @@ function BowlingGame() {
 
 BowlingGame.prototype.currentFrame = function(){
   return this.frameCounter
+};
+
+BowlingGame.prototype.roll = function(hitPins){
+
 };

@@ -23,4 +23,9 @@ describe ("bowlingChallenge", function() {
     expect(game.score).toEqual(0)
   });
 
+  it('can score single points', function() {
+    game.roll(6)
+    expect(game.score).toEqual(6)
+  });
+
 });

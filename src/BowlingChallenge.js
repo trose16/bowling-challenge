@@ -10,6 +10,6 @@ BowlingGame.prototype.currentFrame = function(){
   return this.frameCounter
 };
 
-BowlingGame.prototype.roll = function(hitPins){
-
+BowlingGame.prototype.roll = function(pinsHit){
+  this.score += pinsHit;
 };

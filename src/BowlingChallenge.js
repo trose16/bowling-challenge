@@ -1,5 +1,5 @@
-'use strict';
 
-function bowlingGame() {
 
+function BowlingGame() {
+  this.frames = 10;
 };

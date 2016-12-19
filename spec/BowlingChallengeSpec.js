@@ -14,4 +14,8 @@ describe ("bowlingChallenge", function() {
     expect(game.currentFrame()).toEqual(1)
   });
 
+  it('has a scorecard to keep track of points', function() {
+    expect(game.score).toEqual(0)
+  });
+
 });

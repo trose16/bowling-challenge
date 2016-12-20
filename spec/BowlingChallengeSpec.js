@@ -11,12 +11,15 @@ describe ("bowlingChallenge", function() {
   });
 
   it('knows what frame is being played', function() {
-    expect(game.currentFrame()).toEqual(1)
+    game.frameCounter = 1
+    game.roll()
+    game.roll()
+    expect(game.nextFrame()).toEqual(2)
   });
 
   it('throws an error if you try to play more than 10 frames', function() {
-    for(frame = 0; frame < 10; frame++) { game.currentFrame() }
-    expect(function() { game.currentFrame()}).toThrowError("You've played 10 frames, start a new game!")
+    for(frame = 0; frame < 10; frame++) { game.nextFrame() }
+    expect(function() { game.nextFrame()}).toThrowError("You've played 10 frames, start a new game!")
   });
 
 
@@ -30,27 +33,27 @@ describe ("bowlingChallenge", function() {
 
 
   it("can score a gutter ball", function() {
-    game.roll(1, 0)
+    game.roll(0)
     expect(game.score).toEqual(0)
   });
 
   it('can score single points', function() {
-    game.roll(1, 3)
-    game.roll(1, 3)
+    game.roll(3)
+    game.roll(3)
     expect(game.score).toEqual(6)
   });
 
   it('can score a spare', function() {
-    game.roll(1, 6)
-    game.roll(2, 4)
-    game.roll(1, 2)
+    game.roll(6)
+    game.roll(4)
+    game.roll(2)
     expect(game.score).toEqual(12)
   });
 
   it('can score a strike', function() {
-    game.roll(1, 10)
-    game.roll(1, 1)
-    game.roll(2, 8)
+    game.roll(10)
+    game.roll(1)
+    game.roll(8)
     expect(game.score).toEqual(19)
   });
 

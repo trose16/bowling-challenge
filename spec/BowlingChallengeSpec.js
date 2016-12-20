@@ -10,13 +10,6 @@ describe ("bowlingChallenge", function() {
     expect(game.frames).toEqual(10)
   });
 
-  it('knows what frame is being played', function() {
-    game.frameCounter = 1
-    game.roll()
-    game.roll()
-    expect(game.nextFrame()).toEqual(2)
-  });
-
   it('throws an error if you try to play more than 10 frames', function() {
     for(frame = 0; frame < 10; frame++) { game.nextFrame() }
     expect(function() { game.nextFrame()}).toThrowError("You've played 10 frames, start a new game!")
@@ -24,7 +17,9 @@ describe ("bowlingChallenge", function() {
 
 
   it('allows you to roll up to two times per frame', function() {
-
+    game.roll()
+    game.roll()
+    expect(game.frameCounter).toEqual(2)
   });
 
   it('has a scorecard to keep track of points', function() {

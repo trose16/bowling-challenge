@@ -27,7 +27,7 @@ describe ("bowlingChallenge", function() {
 
   it('selects a random number of pins to fall', function() {
     expect(game.pinsHit()).toBeLessThan(11)
-    expect(game.pinsHit()).toBeGreaterThan(0)
+    expect(game.pinsHit()).toBeGreaterThan(-1)
   });
 
   it("can score a gutter ball", function() {
@@ -54,5 +54,12 @@ describe ("bowlingChallenge", function() {
     game.roll(8)
     expect(game.score).toEqual(19)
   });
+
+  it('will immediately move to the next frame following a strike', function() {
+    game.frameCounter = 1
+    game.roll(10)
+    expect(game.frameCounter).toEqual(2)
+  })
+
 
 });

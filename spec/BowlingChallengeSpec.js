@@ -15,7 +15,6 @@ describe ("bowlingChallenge", function() {
     expect(function() { game.nextFrame()}).toThrowError("You've played 10 frames, start a new game!")
   });
 
-
   it('allows you to roll up to two times per frame', function() {
     game.roll()
     game.roll()
@@ -26,6 +25,10 @@ describe ("bowlingChallenge", function() {
     expect(game.score).toEqual(0)
   });
 
+  it('selects a random number of pins to fall', function() {
+    expect(game.pinsHit()).toBeLessThan(11)
+    expect(game.pinsHit()).toBeGreaterThan(0)
+  });
 
   it("can score a gutter ball", function() {
     game.roll(0)

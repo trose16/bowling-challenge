@@ -1,4 +1,4 @@
-DEFAULT_PINS = 10;
+
 
 function BowlingGame() {
   this.frames = 10;
@@ -15,6 +15,10 @@ BowlingGame.prototype.roll = function(pinsHit){
     this.frameCounter++;
     this.ball = 1;
   };
+};
+
+BowlingGame.prototype.pinsHit = function(){
+    return Math.floor(Math.random() * (11 - 0)) + 0;
 };
 
 // BowlingGame.prototype.nextFrame = function(){

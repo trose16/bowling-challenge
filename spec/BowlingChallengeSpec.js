@@ -52,7 +52,7 @@ describe ("bowlingChallenge", function() {
     game.roll(10)
     game.roll(1)
     game.roll(8)
-    expect(game.score).toEqual(19)
+    expect(game.score).toEqual(28)
   });
 
   it('will immediately move to the next frame following a strike', function() {
@@ -60,6 +60,10 @@ describe ("bowlingChallenge", function() {
     game.roll(10)
     expect(game.frameCounter).toEqual(2)
   })
+
+  it('will will give bonus points for a spare', function() {
+
+  });
 
 
 });

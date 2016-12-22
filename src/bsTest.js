@@ -1,6 +1,8 @@
 function BowlingGame() {
   this.rolls = [];
   this.totalScore = 0;
+  this.frameCounter = 1;
+  this.ball = 1;
 };
 
 BowlingGame.prototype.roll = function(pinsDown) {

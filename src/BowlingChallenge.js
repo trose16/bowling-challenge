@@ -1,59 +1,54 @@
-
-
 function BowlingGame() {
   this.frames = 10;
   this.playing = true;
-  this.ball = 1;
   this.frameCounter = 1;
+  this.ball = 0;
   this.rollTracker = [];
-  this.score = 0;
+  this.totalScore = 0;
 };
 
 BowlingGame.prototype.roll = function(pins){
   this.rollTracker.push(pins);
-  this.score += pins;
   this.ball++;
-  if ( this.ball > 2) {
+  if( pins === 10 && this.ball === 1 ) {
+    this.nextFrame();
+    return "You're sooo STRIKING";
+  } else if( this.ball > 1) {
     this.nextFrame();
   }
 };
 
-
-//
-// BowlingGame.prototype.roll = function(pins){
-//   this.rollTracker.push(pins);
-//   this.score += pins;
-//   this.ball++;
-//   if( pins === 10 && this.ball === 2 ) {
-//     return this.aStrike();
-//   } else if( this.ball > 2) {
-//     this.nextFrame();
-//   }
-// };
-
-
-
-BowlingGame.prototype.pinsHit = function(){
-    return Math.floor(Math.random() * (11 - 0)) + 0;
+BowlingGame.prototype.score = function() {
+  let calc = 0;
+  let i = 0;
+  for (var frame = 0; frame < 10; frame++) {
+      if (this.aStrike(i)) {
+          calc += 10 + this.rollTracker[i+1] + this.rollTracker[i+2];
+          i++;
+      } else if (this.aSpare(i)){
+          calc += 10 + this.rollTracker[i+2];
+          i+=2;
+      } else {
+          calc += this.rollTracker[i] + this.rollTracker[i+1];
+          i+=2;
+      }
+  }
+  return calc;
 };
 
 BowlingGame.prototype.nextFrame = function(){
   this.frameCounter++;
   this.ball = 1;
-  if(this.frameCounter > 10){
-    throw new Error("You've played 10 frames, start a new game!")
-  };
+  // if(this.frameCounter > 10){
+  //   throw new Error("You've played 10 frames, start a new game!")
+  // };
 };
 
-BowlingGame.prototype.aSpare = function(index){
-    return "Spare Ribs Baby!";
-    score += 10 + this.rollTracker[index+2];
-    index += 2;
-    return score;
-    this.nextFrame();
+BowlingGame.prototype.aSpare = function(i) {
+  return this.rollTracker[i] + this.rollTracker[i+1] === 10;
+  return "Spare ribs baby!";
 };
 
-BowlingGame.prototype.aStrike = function(){
-    return "You're soooo STRIKING!";
-    this.nextFrame();
+BowlingGame.prototype.aStrike = function(i) {
+  return this.rollTracker[i] === 10;
 };

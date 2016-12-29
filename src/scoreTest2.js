@@ -6,15 +6,6 @@ function BowlingGame() {
   this.ball = 0;
 };
 
-// BowlingGame.prototype.roll = function(pinsDown) {
-//   this.rolls.push(pinsDown);
-//   this.scoreCalculator();
-//   this.ball++
-//   if (pinsDown === 10) {
-//     return this.bonusCalculator();
-//   }
-// };
-
 BowlingGame.prototype.roll = function(pinsHit) {
   pinsHit = Math.floor(Math.random() * (11 - 0)) + 0;
   this.rolls.push(pinsHit);

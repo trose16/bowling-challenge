@@ -25,6 +25,7 @@ BowlingGame.prototype.score = function() {
       }
   }
   return calc;
+  this.totalScore = calc;
 };
 
 BowlingGame.prototype.readableScore = function() {

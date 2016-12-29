@@ -6,23 +6,21 @@ describe ("bowlingChallenge", function() {
     game = new BowlingGame;
   });
 
-  it('has a total of 10 frames', function() {
-    expect(game.frames).toEqual(10)
-  });
-
   it('throws an error if you try to play more than 10 frames', function() {
     for(frame = 0; frame < 10; frame++) { game.nextFrame() }
     expect(function() { game.nextFrame()}).toThrowError("You've played 10 frames, start a new game!")
   });
 
   it('allows you to roll up to two times per frame', function() {
-    game.roll()
-    game.roll()
+    game.roll(5)
+    game.roll(3)
     expect(game.frameCounter).toEqual(2)
   });
 
   it('has a scorecard to keep track of points', function() {
-    expect(game.totalScore).toEqual(0)
+    game.roll(0)
+    roll(19, 0)
+    expect(game.score()).toEqual(0)
   });
 
   // it('selects a random number of pins to fall', function() {
@@ -33,7 +31,8 @@ describe ("bowlingChallenge", function() {
 
   it("can score a gutter ball", function() {
     game.roll(0)
-    expect(game.totalScore).toEqual(0)
+    roll(19, 0)
+    expect(game.score()).toEqual(0)
   });
 
   it('can score single points', function() {
@@ -67,10 +66,18 @@ describe ("bowlingChallenge", function() {
 
   it('will immediately move to the next frame following a strike', function() {
     game.frameCounter = 1;
-    game.roll(10);
     game.ball === 1;
+    game.roll(10);
     expect(game.frameCounter).toEqual(2)
-  })
+  });
+
+  it('will throw an error if more than 10 pins are hit per frame', function() {
+    game.roll(11)
+    expect(function() {
+      game.frameValidate()
+    }).toThrowError("Oops! You can't hit more than 10 pins per frame!")
+
+  });
 
   function roll(times, pinsHit) {
     for (var i = 0; i < times; i++) {

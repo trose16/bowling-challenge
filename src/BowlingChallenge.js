@@ -1,20 +1,37 @@
 function BowlingGame() {
-  this.frames = 10;
-  this.playing = true;
+  this.ball = 1;
   this.frameCounter = 1;
-  this.ball = 0;
+  this.frameHolder = [];
   this.rollTracker = [];
-  this.totalScore = 0;
 };
 
 BowlingGame.prototype.roll = function(pins){
   this.rollTracker.push(pins);
-  this.ball++;
-  if( pins === 10 && this.ball === 1 ) {
-    this.nextFrame();
-    return "You're sooo STRIKING";
-  } else if( this.ball > 1) {
-    this.nextFrame();
+  if ( this.ball === 1 ) {
+        this.frameHolder[0] = pins;
+        this.ball++;
+        return this.frameValidate();
+  } else if ( this.ball === 2 ) {
+        this.frameHolder[1] = pins;
+        return this.frameValidate();
+  }
+};
+
+
+BowlingGame.prototype.frameValidate = function() {
+  validate = this.frameHolder.reduce(function(a,b){
+    return a+b;
+  });
+  if ( validate > 10 ) {
+        this.rollTracker.pop();
+        this.frameHolder.pop();
+        throw new Error("Oops! You can't hit more than 10 pins per frame!");
+  } if ( validate === 10 && this.ball === 1 ) {
+        return 'STRIKE';
+        this.nextFrame();
+  } if ( validate === 10 && this.ball === 2 ){
+        this.nextFrame();
+        return '/';
   }
 };
 
@@ -22,10 +39,10 @@ BowlingGame.prototype.score = function() {
   let calc = 0;
   let i = 0;
   for (var frame = 0; frame < 10; frame++) {
-      if (this.aStrike(i)) {
+      if (this.scoreStrike(i)) {
           calc += 10 + this.rollTracker[i+1] + this.rollTracker[i+2];
           i++;
-      } else if (this.aSpare(i)){
+      } else if (this.scoreSpare(i)){
           calc += 10 + this.rollTracker[i+2];
           i+=2;
       } else {
@@ -39,16 +56,16 @@ BowlingGame.prototype.score = function() {
 BowlingGame.prototype.nextFrame = function(){
   this.frameCounter++;
   this.ball = 1;
-  // if(this.frameCounter > 10){
+  this.frameHolder = [0, 0];
+  // if(this.frameCounter > 10 && !){
   //   throw new Error("You've played 10 frames, start a new game!")
   // };
 };
 
-BowlingGame.prototype.aSpare = function(i) {
+BowlingGame.prototype.scoreSpare = function(i) {
   return this.rollTracker[i] + this.rollTracker[i+1] === 10;
-  return "Spare ribs baby!";
 };
 
-BowlingGame.prototype.aStrike = function(i) {
+BowlingGame.prototype.scoreStrike = function(i) {
   return this.rollTracker[i] === 10;
 };

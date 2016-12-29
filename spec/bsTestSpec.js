@@ -23,7 +23,7 @@ describe ("bowlingChallenge", function() {
   });
 
   it('can score a perfect game', function() {
-    game.rollTracker = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10];
+    game.rolls = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10];
     expect(game.score()).toEqual(300);
   });
 

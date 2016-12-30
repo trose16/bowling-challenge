@@ -31,8 +31,8 @@ BowlingGame.prototype.frameValidate = function() {
         this.frameHolder.pop();
         throw new Error("Oops! You can't hit more than 10 pins per frame!");
   } else if ( validate === 10 && this.ball === 1 ) {
-        return 'STRIKE';
         this.nextFrame();
+        return 'STRIKE';
   } else if ( validate === 10 && this.ball === 2 ) {
         this.nextFrame();
         return '/';

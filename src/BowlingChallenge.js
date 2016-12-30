@@ -14,24 +14,30 @@ BowlingGame.prototype.roll = function(pins){
   } else if ( this.ball === 2 ) {
         this.frameHolder[1] = pins;
         return this.frameValidate();
+        this.nextFrame();
   }
 };
 
+BowlingGame.prototype.autoPinsHit = function(){
+  return Math.floor(Math.random() * (11 - 0)) + 0;
+};
 
 BowlingGame.prototype.frameValidate = function() {
   validate = this.frameHolder.reduce(function(a,b){
     return a+b;
   });
-  if ( validate > 10 ) {
+    if ( validate > 10 ) {
         this.rollTracker.pop();
         this.frameHolder.pop();
         throw new Error("Oops! You can't hit more than 10 pins per frame!");
-  } if ( validate === 10 && this.ball === 1 ) {
+  } else if ( validate === 10 && this.ball === 1 ) {
         return 'STRIKE';
         this.nextFrame();
-  } if ( validate === 10 && this.ball === 2 ){
+  } else if ( validate === 10 && this.ball === 2 ) {
         this.nextFrame();
         return '/';
+  } else if ( validate > 10 && this.ball === 2 ) {
+        this.nextFrame();
   }
 };
 

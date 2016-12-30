@@ -12,6 +12,7 @@ describe ("bowlingChallenge", function() {
   });
 
   it('allows you to roll up to two times per frame', function() {
+    game.frameCounter = 1
     game.roll(5)
     game.roll(3)
     expect(game.frameCounter).toEqual(2)
@@ -23,11 +24,11 @@ describe ("bowlingChallenge", function() {
     expect(game.score()).toEqual(0)
   });
 
-  // it('selects a random number of pins to fall', function() {
-  //   game.roll();
-  //   expect(game.roll().pinsHit()).toBeLessThan(11)
-  //   expect(game.roll().pinsHit()).toBeGreaterThan(-1)
-  // });
+  it('selects a random number of pins to fall', function() {
+    game.autoPinsHit();
+    expect(game.autoPinsHit()).toBeLessThan(11)
+    expect(game.autoPinsHit()).toBeGreaterThan(-1)
+  });
 
   it("can score a gutter ball", function() {
     game.roll(0)

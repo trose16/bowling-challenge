@@ -18,8 +18,42 @@ BowlingGame.prototype.roll = function(pins){
   }
 };
 
-BowlingGame.prototype.autoPinsHit = function(){
-  return Math.floor(Math.random() * (11 - 0)) + 0;
+BowlingGame.prototype.autoRoll = function(){
+  pins = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  if ( this.ball === 1 ) {
+      roll_1 = pins[Math.floor(Math.random() * pins.length)];
+      this.rollTracker.push(roll_1);
+      this.frameHolder[0] = roll_1;
+      this.ball++;
+      return roll_1;
+  } else if ( this.ball === 2 ) {
+      roll_2 = pins[Math.floor(Math.random() * pins.length)];
+      this.rollTracker.push(roll_2);
+      this.frameHolder[1] = roll_2;
+      this.autoFrameValidate();
+      return roll_2;
+  }
+};
+
+BowlingGame.prototype.autoFrameValidate = function() {
+  validate = this.frameHolder.reduce(function(a,b){
+    return a+b;
+  });
+      if (validate > 10 ) {
+        this.rollTracker.pop();
+        this.autoRoll().roll_2;
+    } else if (validate <= 10 && this.ball === 2 ) {
+        this.nextFrame();
+    }
+  };
+
+BowlingGame.prototype.nextFrame = function(){
+  this.ball = 1;
+  this.frameCounter++;
+  this.frameHolder = [0, 0];
+  // if( this.frameCounter > 10 ) {
+  //   throw new Error("You've played 10 frames, start a new game!")
+  // };
 };
 
 BowlingGame.prototype.frameValidate = function() {
@@ -30,7 +64,8 @@ BowlingGame.prototype.frameValidate = function() {
         this.rollTracker.pop();
         this.frameHolder.pop();
         throw new Error("Oops! You can't hit more than 10 pins per frame!");
-  } else if ( validate === 10 && this.ball === 1 ) {
+  }
+  else if ( validate === 10 && this.ball === 1 ) {
         this.nextFrame();
         return 'STRIKE';
   } else if ( validate === 10 && this.ball === 2 ) {
@@ -57,15 +92,6 @@ BowlingGame.prototype.score = function() {
       }
   }
   return calc;
-};
-
-BowlingGame.prototype.nextFrame = function(){
-  this.frameCounter++;
-  this.ball = 1;
-  this.frameHolder = [0, 0];
-  // if(this.frameCounter > 10 && !){
-  //   throw new Error("You've played 10 frames, start a new game!")
-  // };
 };
 
 BowlingGame.prototype.scoreSpare = function(i) {

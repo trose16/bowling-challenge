@@ -5,14 +5,23 @@ $(document).ready(function() {
   function gameDisplayUpdate() {
     $('#frame-number').text(game.frameCounter);
     $('#ball-number').text(game.ball + ' Roll!');
-    $('#pins-hit').text(game.autoPinsHit() + ' Pins!')
+    $('#pins-hit').text(game.autoRoll() + ' Pins!')
+    $('#points-tracker').text(game.rollTracker + ' - ')
+    $('#final-score').text(game.score())
   }
 
 
     $('#auto-pins-hit').click(function() {
-      game.autoPinsHit();
+      game.autoRoll();
       gameDisplayUpdate();
     })
+
+    $('#calculate-score').click(function() {
+      game.score();
+      gameDisplayUpdate();
+    })
+
+
 
 
 });

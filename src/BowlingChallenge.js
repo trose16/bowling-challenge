@@ -16,6 +16,7 @@ BowlingGame.prototype.roll = function(pins){
         return this.frameValidate();
         this.nextFrame();
   } else if ( this.ball === 3 ) {
+        this.frameHolder[2] = pins;
         return this.frameValidate();
   }
 };
@@ -37,9 +38,19 @@ BowlingGame.prototype.frameValidate = function() {
       return '/';
   } else if ( this.frameHolder.length === 2 && this.frameCounter != 10 ) {
       this.nextFrame();
-  } else if ( this.frameHolder[0] === 10 && this.frameCounter === 10 ) {
-      return 'Strike bonus roll';
-  } else if ( validate === 10 && this.frameHolder.length === 2 && this.frameCounter === 10 ) {
+  }
+
+  else if ( this.frameHolder[0] === 10 && this.frameHolder.length === 1 && this.frameCounter === 10 ) {
+      return 'Strike bonus roll 1';
+  } else if (this.frameHolder[0] === 10 && this.frameHolder[1] === 10 && this.frameHolder.length === 2 && this.frameCounter === 10 ){
+      this.ball = 3;
+      return "Strike bonus roll 2";
+  } else if ( this.frameHolder[0] === 10 && this.frameHolder[1] === 10 && this.frameHolder[2] === 10 && this.frameHolder.length === 3 && this.frameCounter === 10 ){
+      return "Game Over! Your Score: " + this.score();
+  }
+
+
+  else if ( validate === 10 && this.frameHolder.length === 2 && this.frameCounter === 10 ) {
       return 'Spare bonus roll';
   } else if ( validate != 10 && this.frameHolder.length === 2 && this.frameCounter === 10 ) {
       return "Game Over! Your Score: " + this.score();

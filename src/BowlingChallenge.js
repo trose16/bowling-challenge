@@ -47,11 +47,12 @@ BowlingGame.prototype.frameValidate = function() {
       return "Strike bonus roll 2";
   } else if ( this.frameHolder[0] === 10 && this.frameHolder[1] === 10 && this.frameHolder[2] === 10 && this.frameHolder.length === 3 && this.frameCounter === 10 ){
       return "Game Over! Your Score: " + this.score();
-  }
 
-
-  else if ( validate === 10 && this.frameHolder.length === 2 && this.frameCounter === 10 ) {
+  } else if ( validate === 10 && this.frameHolder.length === 2 && this.frameCounter === 10 ) {
+      this.ball++;
       return 'Spare bonus roll';
+  } else if ( validate != 30 && this.frameHolder.length === 3 && this.frameCounter === 10 ) {
+      return "Game Over! Your Score: " + this.score();
   } else if ( validate != 10 && this.frameHolder.length === 2 && this.frameCounter === 10 ) {
       return "Game Over! Your Score: " + this.score();
   }

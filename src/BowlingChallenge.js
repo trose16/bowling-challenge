@@ -17,12 +17,17 @@ BowlingGame.prototype.roll = function(pins){
         return this.frameValidate();
         this.nextFrame();
   } else if ( this.frameCounter === 10 ) {
+        this.frameHolder[0] = pins;
         return this.tenthFrame();
   }
 };
 
 BowlingGame.prototype.tenthFrame = function() {
-  return 'TESTING PLEASE WORK';
+  if (this.frameHolder[0] === 10 && this.frameCounter === 10) {
+      return 'You get a bonus roll';
+  } else {
+      return 'TESTING PLEASE WORK';
+  }
 };
 
 BowlingGame.prototype.frameValidate = function() {

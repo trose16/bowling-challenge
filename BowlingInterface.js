@@ -4,22 +4,32 @@ $(document).ready(function() {
 
   function gameDisplayUpdate() {
     $('#frame-number').text(game.frameCounter);
-    $('#ball-number').text(game.ball + ' Roll!');
+    $('#ball-number').text(game.ball + ' Rolling...');
     $('#pins-hit').text(game.autoRoll() + ' Pins!')
-    $('#points-tracker').text(game.rollTracker + ' - ')
+    $('#points-tracker').text('Points per frame ' + game.rollTracker + ' - ')
     $('#final-score').text(game.score())
   }
-
-
-    $('#auto-pins-hit').click(function() {
-      game.autoRoll();
-      gameDisplayUpdate();
-    })
 
     $('#calculate-score').click(function() {
       game.score();
       gameDisplayUpdate();
     })
+
+    function manualGameDisplayUpdate() {
+      $('#manual-frame-number').text(game.frameCounter);
+      $('#manual-ball-number').text(game.ball + ' Rolling...');
+      $('#manual-pins-hit').text(game.roll() + ' Pins!')
+      $('#manual-points-tracker').text('Points per frame ' + game.rollTracker + ' - ')
+      $('#final-score').text(game.score())
+    }
+
+    $('#submit-score').click(function() {
+      game.score();
+      manualGameDisplayUpdate();
+    })
+
+
+
 
 
 

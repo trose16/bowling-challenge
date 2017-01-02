@@ -80,6 +80,11 @@ describe ("bowlingChallenge", function() {
 
   });
 
+  it('will reset when 10 frames have been reached') function() {
+    this.frameCounter = 10;
+    expect(game.reset())
+  }
+
   function roll(times, pinsHit) {
     for (var i = 0; i < times; i++) {
       game.roll(pinsHit);

@@ -23,45 +23,70 @@ BowlingGame.prototype.roll = function(pins){
   }
 };
 
-BowlingGame.prototype.frameValidate = function() {
-  validate = this.frameHolder.reduce(function(a,b){
+
+BowlingGame.prototype.frameCalculate = function() {
+  this.frameHolder.reduce(function(a,b){
     return a+b;
   });
-    if ( validate > 10 && this.frameCounter != 10 ) {
+};
+
+BowlingGame.prototype.frameValidate = function() {
+  // this makes sure you don't have more than 10 pins per frame
+    if ( this.frameCalculate() > 10 && this.frameCounter != 10 ) {
       this.ball = 2;
       this.rollTracker.pop();
       this.frameHolder.pop();
       throw new TypeError("Oops! You can't hit more than 10 pins per frame!");
-  } else if ( this.frameHolder[0] === 10 && this.frameCounter != 10) {
+  }
+  // this checks for strike & moves immediately to next frame
+  else if ( this.frameHolder[0] === 10 && this.frameCounter != 10) {
       this.nextFrame();
       return 'X';
-  } else if ( validate === 10 && this.ball === 2 && this.frameCounter != 10 ) {
+  }
+  // this moves checks to see if you earned a spare
+  else if ( this.frameCalculate() === 10 && this.ball === 2 && this.frameCounter != 10 ) {
       this.nextFrame();
       return '/';
-  } else if ( this.frameHolder.length === 2 && this.frameCounter != 10 ) {
+  }
+  // this moves single point rolls to next frame
+  else if ( this.frameHolder.length === 2 && this.frameCounter != 10 ) {
       this.nextFrame();
   }
-
-  else if ( this.frameHolder[0] === 10 && this.frameHolder.length === 1 && this.frameCounter === 10 ) {
-      return 'Strike bonus roll 1';
-  } else if (this.frameHolder[0] === 10 && this.frameHolder[1] === 10 && this.frameHolder.length === 2 && this.frameCounter === 10 ){
-      this.ball = 3;
-      return "Strike bonus roll 2";
-  } else if ( this.frameHolder[0] === 10 && this.frameHolder[1] === 10 && this.frameHolder[2] === 10 && this.frameHolder.length === 3 && this.frameCounter === 10 ){
-      this.ball = 0;
-      return "Game Over! Your Score: " + this.score();
-
-  } else if ( validate < 10 && this.frameHolder.length === 2 && this.frameCounter === 10 ) {
-      this.ball = 0;
-      return "Game Over! Your Score: " + this.score();
-  } else if ( validate === 10 && this.frameHolder.length === 2 && this.frameCounter === 10 ) {
+  // this is tenth frame checking for spare and earning sing bonus roll
+  else if ( this.frameCalculate() === 10 && this.frameHolder.length === 2 && this.frameCounter === 10 ) {
       this.ball++;
       return 'Spare bonus roll';
-  } else if ( validate != 30 && this.frameHolder.length === 3 && this.frameCounter === 10 ) {
+  }
+  // this is tenth frame checking for first strike and earning bonus roll 1
+  else if ( this.frameHolder[0] === 10 && this.frameHolder.length === 1 && this.frameCounter === 10 ) {
+      return 'Strike bonus roll 1';
+  }
+  // this is tenth frame checking for second strike and earning bonus roll 2
+  else if (this.frameHolder[0] === 10 && this.frameHolder[1] === 10 && this.frameHolder.length === 2 && this.frameCounter === 10 ){
+      this.ball = 3;
+      return "Strike bonus roll 2";
+  }
+  // defining game over after single points tenth frame (no bonus rolls)
+  else if ( this.frameCalculate() < 10 && this.frameHolder.length === 2 && this.frameCounter === 10 ) {
+      this.ball = 0;
+      return "Game Over! Your Score: " + this.score();
+  }
+  // defining game over after spare in tenth frame (1 bonus roll)
+  else if ( this.frameCalculate() != 30 && this.frameHolder.length === 3 && this.frameCounter === 10 ) {
+      this.ball = 0;
+      return "Game Over! Your Score: " + this.score();
+  }
+  // defining game over after double strike tenth frame (2 bonus rolls)
+  else if ( this.frameHolder[0] === 10 && this.frameHolder[1] === 10 && this.frameHolder[2] === 10 && this.frameHolder.length === 3 && this.frameCounter === 10 ){
       this.ball = 0;
       return "Game Over! Your Score: " + this.score();
   }
 };
+
+
+
+
+
 
 BowlingGame.prototype.nextFrame = function(){
   this.ball = 1;
@@ -89,18 +114,7 @@ BowlingGame.prototype.autoRoll = function(){
   }
 };
 
-BowlingGame.prototype.autoFrameValidate = function() {
-  validate = this.frameHolder.reduce(function(a,b){
-    return a+b;
-  });
-      if (validate > 10 ) {
-        this.rollTracker.pop();
-        this.frameHolder.pop();
-        this.autoRoll().roll_2;
-    } else {
-      return this.frameValidate();
-    }
-  };
+
 
 
 BowlingGame.prototype.score = function() {
@@ -138,6 +152,40 @@ BowlingGame.prototype.frameLayout = function(){
     // add logic for returning frames in pairs from index 0
   }
 };
+
+// ------------------------------------------------
+
+BowlingGame.prototype.autoRoll = function(){
+  pins = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  if ( this.ball === 1 ) {
+      roll_1 = pins[Math.floor(Math.random() * pins.length)];
+      this.rollTracker.push(roll_1);
+      this.frameHolder[0] = roll_1;
+      this.ball++;
+      return roll_1;
+  } else if ( this.ball === 2 ) {
+      roll_2 = pins[Math.floor(Math.random() * pins.length)];
+      this.rollTracker.push(roll_2);
+      this.frameHolder[1] = roll_2;
+      this.autoFrameValidate();
+      return roll_2;
+  }
+};
+
+BowlingGame.prototype.autoFrameValidate = function() {
+  validate = this.frameHolder.reduce(function(a,b){
+    return a+b;
+  });
+      if (validate > 10 ) {
+        this.rollTracker.pop();
+        this.frameHolder.pop();
+        this.autoRoll().roll_2;
+    } else {
+      return this.frameValidate();
+    }
+  };
+
+// ------------------------------------------------
 
 BowlingGame.prototype.scoreSpare = function(i) {
   return this.rollTracker[i] + this.rollTracker[i+1] === 10;

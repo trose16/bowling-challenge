@@ -18,6 +18,8 @@ BowlingGame.prototype.roll = function(pins){
   } else if ( this.ball === 3 ) {
         this.frameHolder[2] = pins;
         return this.frameValidate();
+  } else if ( this.ball === 4 ) {
+        return this.gameReset();
   }
 };
 
@@ -46,7 +48,9 @@ BowlingGame.prototype.frameValidate = function() {
       this.ball = 3;
       return "Strike bonus roll 2";
   } else if ( this.frameHolder[0] === 10 && this.frameHolder[1] === 10 && this.frameHolder[2] === 10 && this.frameHolder.length === 3 && this.frameCounter === 10 ){
+      this.ball++;
       return "Game Over! Your Score: " + this.score();
+      this.gameReset();
 
   } else if ( validate === 10 && this.frameHolder.length === 2 && this.frameCounter === 10 ) {
       this.ball++;
@@ -117,19 +121,12 @@ BowlingGame.prototype.score = function() {
 };
 
 
-
-BowlingGame.prototype.gameOver = function() {
-  return 'game over';
-  if (this.score() < 150 ) {
-        return "Ouch you need practice!";
-        return 'your final score:' + this.score();
-  } else if (this.score() > 250 ) {
-        return "Woah! Are you a bowling pro?!";
-        return 'your final score:' + this.score();
-  } else {
-        return "Not too bad, keep bowling!";
-        return 'your final score:' + this.score();
-  }
+BowlingGame.prototype.gameReset = function(){
+  this.rollTracker = [];
+  this.ball = 1;
+  this.frameHolder = [];
+  this.frameCounter = 1;
+  return "You've started a new game of 10 pin bowling!";
 };
 
 

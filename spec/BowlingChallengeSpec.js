@@ -24,10 +24,10 @@ describe ("bowlingChallenge", function() {
     expect(game.score()).toEqual(0)
   });
 
-  it('selects a random number of pins to fall', function() {
-    game.autoPinsHit();
-    expect(game.autoPinsHit()).toBeLessThan(11)
-    expect(game.autoPinsHit()).toBeGreaterThan(-1)
+  it('selects a random number of 10 pins to fall per frame', function() {
+    game.autoRoll();
+    expect(game.autoRoll()).toBeLessThan(11)
+    expect(game.autoRoll()).toBeGreaterThan(-1)
   });
 
   it("can score a gutter ball", function() {
@@ -80,10 +80,6 @@ describe ("bowlingChallenge", function() {
 
   });
 
-  it('will reset when 10 frames have been reached') function() {
-    this.frameCounter = 10;
-    expect(game.reset())
-  }
 
   function roll(times, pinsHit) {
     for (var i = 0; i < times; i++) {

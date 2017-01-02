@@ -5,7 +5,6 @@ function BowlingGame() {
   this.rollTracker = [];
 };
 
-
 BowlingGame.prototype.roll = function(pins){
   this.rollTracker.push(pins);
   if ( this.ball === 1 ) {
@@ -16,22 +15,16 @@ BowlingGame.prototype.roll = function(pins){
         this.frameHolder[1] = pins;
         return this.frameValidate();
         this.nextFrame();
+  } else if ( this.ball === 3 ) {
+        return this.frameValidate();
   }
 };
-
-// BowlingGame.prototype.tenthFrame = function() {
-//   if ( this.frameHolder[0] === 10 && this.frameCounter === 10) {
-//       return 'Strike bonus roll';
-//   } else {
-//       return 'TESTING PLEASE WORK';
-//   }
-// };
 
 BowlingGame.prototype.frameValidate = function() {
   validate = this.frameHolder.reduce(function(a,b){
     return a+b;
   });
-    if ( validate > 10 ) {
+    if ( validate > 10 && this.frameCounter != 10 ) {
       this.ball = 2;
       this.rollTracker.pop();
       this.frameHolder.pop();
@@ -49,7 +42,7 @@ BowlingGame.prototype.frameValidate = function() {
   } else if ( validate === 10 && this.frameHolder.length === 2 && this.frameCounter === 10 ) {
       return 'Spare bonus roll';
   } else if ( validate != 10 && this.frameHolder.length === 2 && this.frameCounter === 10 ) {
-      return 'Game over';
+      return "Game Over! Your Score: " + this.score();
   }
 };
 

@@ -48,6 +48,8 @@ BowlingGame.prototype.frameValidate = function() {
       return 'Strike bonus roll';
   } else if ( validate === 10 && this.frameHolder.length === 2 && this.frameCounter === 10 ) {
       return 'Spare bonus roll';
+  } else if ( validate != 10 && this.frameHolder.length === 2 && this.frameCounter === 10 ) {
+      return 'Game over';
   }
 };
 

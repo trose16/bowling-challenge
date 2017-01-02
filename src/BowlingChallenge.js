@@ -18,17 +18,17 @@ BowlingGame.prototype.roll = function(pins){
         this.nextFrame();
   } else if ( this.frameCounter === 10 ) {
         this.frameHolder[0] = pins;
-        return this.tenthFrame();
+        return this.frameValidate();
   }
 };
 
-BowlingGame.prototype.tenthFrame = function() {
-  if (this.frameHolder[0] === 10 && this.frameCounter === 10) {
-      return 'You get a bonus roll';
-  } else {
-      return 'TESTING PLEASE WORK';
-  }
-};
+// BowlingGame.prototype.tenthFrame = function() {
+//   if ( this.frameHolder[0] === 10 && this.frameCounter === 10) {
+//       return 'Strike bonus roll';
+//   } else {
+//       return 'TESTING PLEASE WORK';
+//   }
+// };
 
 BowlingGame.prototype.frameValidate = function() {
   validate = this.frameHolder.reduce(function(a,b){
@@ -47,6 +47,8 @@ BowlingGame.prototype.frameValidate = function() {
       return '/';
   } else if ( this.frameHolder.length === 2 && this.frameCounter != 10 ) {
       this.nextFrame();
+  } else if ( this.frameHolder[0] === 10 && this.frameCounter === 10 ) {
+      return 'Strike bonus roll';
   }
 };
 

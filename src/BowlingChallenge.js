@@ -16,13 +16,13 @@ BowlingGame.prototype.roll = function(pins){
         this.frameHolder[1] = pins;
         return this.frameValidate();
         this.nextFrame();
-  } else if ( this.tenthFrame() ) {
-        return 'TESTING PLEASE WORK';
+  } else if ( this.frameCounter === 10 ) {
+        return this.tenthFrame();
   }
 };
 
 BowlingGame.prototype.tenthFrame = function() {
-  this.frameCounter === 10;
+  return 'TESTING PLEASE WORK';
 };
 
 BowlingGame.prototype.frameValidate = function() {

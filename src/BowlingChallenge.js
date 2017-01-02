@@ -8,17 +8,14 @@ function BowlingGame() {
 
 BowlingGame.prototype.roll = function(pins){
   this.rollTracker.push(pins);
-  if ( this.ball === 1 && this.frameCounter != 10 ) {
+  if ( this.ball === 1 ) {
         this.frameHolder[0] = pins;
         this.ball++;
         return this.frameValidate();
-  } else if ( this.ball === 2 && this.frameCounter != 10 ) {
+  } else if ( this.ball === 2 ) {
         this.frameHolder[1] = pins;
         return this.frameValidate();
         this.nextFrame();
-  } else if ( this.frameCounter === 10 ) {
-        this.frameHolder[0] = pins;
-        return this.frameValidate();
   }
 };
 
@@ -49,6 +46,8 @@ BowlingGame.prototype.frameValidate = function() {
       this.nextFrame();
   } else if ( this.frameHolder[0] === 10 && this.frameCounter === 10 ) {
       return 'Strike bonus roll';
+  } else if ( validate === 10 && this.frameHolder.length === 2 && this.frameCounter === 10 ) {
+      return 'Spare bonus roll';
   }
 };
 

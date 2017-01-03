@@ -30,6 +30,22 @@ BowlingGame.prototype.frameCalculate = function() {
   });
 };
 
+BowlingGame.prototype.isSpare = function() {
+  this.frameCalculate() === 10;
+  this.ball === 2;
+  this.frameCounter != 10;
+};
+
+BowlingGame.prototype.isStrike = function() {
+  this.frameHolder[0] === 10;
+  this.frameCounter != 10;
+};
+
+BowlingGame.prototype.isSinglePoints = function() {
+  this.frameHolder.length === 2;
+  this.frameCounter != 10;
+};
+
 BowlingGame.prototype.frameValidate = function() {
   // this makes sure you don't have more than 10 pins per frame
     if ( this.frameCalculate() > 10 && this.frameCounter != 10 ) {
@@ -37,19 +53,13 @@ BowlingGame.prototype.frameValidate = function() {
       this.rollTracker.pop();
       this.frameHolder.pop();
       throw new TypeError("Oops! You can't hit more than 10 pins per frame!");
-  }
-  // this checks for strike & moves immediately to next frame
-  else if ( this.frameHolder[0] === 10 && this.frameCounter != 10) {
+  } else if ( this.isStrike() ) {
       this.nextFrame();
       return 'X';
-  }
-  // this moves checks to see if you earned a spare
-  else if ( this.frameCalculate() === 10 && this.ball === 2 && this.frameCounter != 10 ) {
+  } else if ( this.isSpare() ) {
       this.nextFrame();
       return '/';
-  }
-  // this moves single point rolls to next frame
-  else if ( this.frameHolder.length === 2 && this.frameCounter != 10 ) {
+  } else if ( this.isSinglePoints() ) {
       this.nextFrame();
   }
   // this is tenth frame checking for spare and earning sing bonus roll
@@ -66,6 +76,8 @@ BowlingGame.prototype.frameValidate = function() {
       this.ball = 3;
       return "Strike bonus roll 2";
   }
+
+  
   // defining game over after single points tenth frame (no bonus rolls)
   else if ( this.frameCalculate() < 10 && this.frameHolder.length === 2 && this.frameCounter === 10 ) {
       this.ball = 0;
@@ -186,6 +198,10 @@ BowlingGame.prototype.autoFrameValidate = function() {
   };
 
 // ------------------------------------------------
+
+BowlingGame.prototype.isStrike = function() {
+	this.frameHolder[0] === 10 && this.frameCounter != 10
+};
 
 BowlingGame.prototype.scoreSpare = function(i) {
   return this.rollTracker[i] + this.rollTracker[i+1] === 10;

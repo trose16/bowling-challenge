@@ -20,7 +20,7 @@ describe ("bowlingChallenge", function() {
 
   it('throws an error if more than 10 pins are hit', function() {
     game.roll(11);
-    expect(function() { game.frameValidate() }).toThrowError(TypeError)("Oops! You can't hit more than 10 pins per frame!")
+    expect(function() { game.frameValidate() }).toThrowError("Oops! You can't hit more than 10 pins per frame!")
   });
 
   it('has a scorecard to keep track of points', function() {

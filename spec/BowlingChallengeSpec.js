@@ -72,8 +72,7 @@ describe ("bowlingChallenge", function() {
 
   it('will immediately move to the next frame following a strike', function() {
     game.frameCounter = 1;
-    game.ball === 1;
-    game.roll(10);
+    game.frameHolder[0] === 10;
     expect(game.frameCounter).toEqual(2)
   });
 

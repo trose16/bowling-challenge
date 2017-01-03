@@ -1,3 +1,44 @@
+AutoMode Bowling Game
+  • Enables automatic game where number of pins hit are determined randomly
+  • Ensures pins hit do not exceed 10 per frame
+  • Ensures two balls per frame unless strike
+  • Provides correct final score following tenth frame
+
+  Manual Mode Bowling Scorecard
+    • Provides digital scorecard for players to record & calculate their score
+    • Corrects user if they record more than 10 pins hit per frame
+    • Provides two balls per frame unless strike
+    • Handles tenth frame bonus rolls for spares/strikes with custom user messages
+    • Provides correct final score following tenth frame
+    • Game resets so additional rolls are not recorded
+
+  To Play:
+    AutoMode
+      Via index.html (jquery) interface:
+        -Press "roll" and enjoy the magic of bowling
+      Via console.log enter:
+        game = new BowlingGame
+        game.AutoRoll() x 20 (appx to reach 10th frame)
+        game.score()
+        if you get NAN roll a couple more times and try score() again
+    ManualMode
+      Via console.log enter:
+      game = new BowlingGame
+      game.roll(x)
+      it will automatically score and end your game upon final frame.
+
+
+  Troubleshooting
+    Auto Roll Mode
+      • Tenth frame bonus rolls
+      • Custom user messages for strikes and spares
+      • Game reset so additional rolls are not recorded following 10th frame
+
+    Manual Mode
+      • Jasmine test glitches, two report failure while console.log and feature testing confirms proper usage.
+      • JQuery forms I'd like to pass the value entered into my javascript function as the pins argument so the logic works with the html interface.
+
+
 As a bowler
 So that I can play the sport I love
 I want to be able to start a bowling game
